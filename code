@@ -1,0 +1,22 @@
+function onFormSubmit(e) {
+  var ss = SpreadsheetApp.getActive();
+  var sheet = ss.getActiveSheet();
+  var range = e.range;
+  var row = range.getRowIndex();
+  var headers = sheet.getRange('1:1').getValues();
+  var editUrlCol = headers.indexOf('Edit URL');
+  
+  var form = FormApp.openById(FORM_ID);
+  var numResponses = form.getResponses().length;
+  var lastResponse = form.getResponses[numResponses - 1];
+  var editUrl = getShortEditUrl_(lastResponse);
+  
+  sheet.getRange(row, editUrlCol).setValue(editUrl);    
+}
+
+function getShortEditUrl_(formResponse) {
+  var url = UrlShortener.Url.insert({
+    longUrl: formResponse.getEditResponseUrl()
+    });
+  return url.id; 
+}
