@@ -2,16 +2,18 @@ function onFormSubmit(e) {
   var ss = SpreadsheetApp.getActive();
   var sheet = ss.getActiveSheet();
   var range = e.range;
+  var values = e.namedValues; Logger.log(values);
   var row = range.getRowIndex();
   var headers = sheet.getRange('1:1').getValues();
-  var editUrlCol = headers[0].indexOf('Edit URL');
+  var editUrlCol = headers[0].indexOf('Edit URL') + 1;
   
   var form = FormApp.openById(FORM_ID);
-  var numResponses = form.getResponses().length;
-  var lastResponse = form.getResponses[numResponses - 1];
-  var editUrl = getShortEditUrl_(lastResponse);
+  var formResponses = form.getResponses();
+  var lastResponse = formResponses[formResponses.length - 1]; Logger.log(lastResponse);
+  var editUrl = getShortEditUrl_(lastResponse); 
   
-  sheet.getRange(row, editUrlCol).setValue(editUrl);    
+  sheet.getRange(row, editUrlCol).setValue(editUrl);  
+  
 }
 
 function getShortEditUrl_(formResponse) {
