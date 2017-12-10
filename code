@@ -1,3 +1,10 @@
+/**
+  * Gets the edit response URL for a single (the last) 
+  * form submission on form submit and writes it
+  * in the last column in the destination sheet.
+  */
+
+
 var FORM_ID = '1234567890';
 
 function onFormSubmit(e) {
